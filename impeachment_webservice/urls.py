@@ -4,6 +4,7 @@ from impeachment.views import ImpeachmentCreateViewSet
 from impeachment.views import ImpeachmentRetrieveUpdateDeleteViewSet
 from impeachment.views import ImpeachmentListViewSet
 from impeachment.views import RequestTestAPI
+from .docs import schema_view
 
 urlpatterns = [
     path("api/v1/Impeachments/create", ImpeachmentCreateViewSet.as_view(), name="Impeachment_create"),
@@ -16,5 +17,7 @@ urlpatterns = [
 
     path("api/v1/Impeachments/list", ImpeachmentListViewSet.as_view, name = "Impeachment_list"),
 
-    path("api/v1/request", RequestTestAPI.as_view(), name = "Impeachment_test"),    
+    path("api/v1/request", RequestTestAPI.as_view(), name = "Impeachment_test"),   
+    path("docs/", schema_view.with_ui ("swagger", cache_timeout=None), name= "schema-swagger-ui"),
+    path("redoc/", schema_view.with_ui ("redoc", cache_timeout=None), name= "schema-redoc")
 ]
