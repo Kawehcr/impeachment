@@ -1,0 +1,6 @@
+CREATE TABLE Impeachment(
+	id INT NOT NULL,
+    company_id INT NOT NULL,
+	NOMEIMPUGNACAO VARCHAR(60) NULL,
+	DESCRICAOIMPUGNACAO VARCHAR(max) NULL
+) CONSTRAINT pk_impeachment primary key(id)
