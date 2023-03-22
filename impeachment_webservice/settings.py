@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -92,6 +93,45 @@ SWAGGER_SETTINGS = {
     "DEFAULT_INFO": "config.docs.swagger_info",
     "DEFAULT_MODEL_RENDERING": "model",
     "DEFAULT_MODEL_DEPTH": 2,
+}
+
+
+# CONFIGURATION DJANGO-REST-FRAMEWORK
+REST_FRAMEWORK = {
+    "UNAUTHENTICATED_USER": None,
+    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "common.rest_framework.keycloak_authentication.KeycloakAuthentication"
+    ],
+    "PAGE_SIZE": 100,
+    "ORDERING_PARAM": "order",
+}
+
+
+# CONFIGURATION KEYCLOAK
+KEYCLOAK_PUBLIC_KEY = os.environ.get("KEYCLOAK_PUBLIC_KEY")
+
+KEYCLOAK_FORMAT_PUBLIC_KEY = """-----BEGIN PUBLIC KEY-----
+{}
+-----END PUBLIC KEY-----"""
+
+KEYCLOAK_SERVER_URL = os.environ.get("KEYCLOAK_SERVER_URL")
+KEYCLOAK_REALM = os.environ.get("KEYCLOAK_REALM")
+KEYCLOAK_CLIENT_ID = os.environ.get("KEYCLOAK_CLIENT_ID")
+KEYCLOAK_CLIENT_SECRET_KEY = os.environ.get("KEYCLOAK_CLIENT_SECRET_KEY")
+
+KEYCLOAK_CLIENT_PUBLIC_KEY = os.environ.get(
+    "KEYCLOAK_CLIENT_PUBLIC_KEY", KEYCLOAK_PUBLIC_KEY
+)
+
+KEYCLOAK_CONFIG = {
+    "KEYCLOAK_SERVER_URL": KEYCLOAK_SERVER_URL,
+    "KEYCLOAK_REALM": KEYCLOAK_REALM,
+    "KEYCLOAK_CLIENT_ID": KEYCLOAK_CLIENT_ID,
+    "KEYCLOAK_CLIENT_SECRET_KEY": KEYCLOAK_CLIENT_SECRET_KEY,
+    "KEYCLOAK_CLIENT_PUBLIC_KEY": KEYCLOAK_FORMAT_PUBLIC_KEY.format(
+        KEYCLOAK_CLIENT_PUBLIC_KEY
+    ),
 }
 
 
