@@ -11,12 +11,14 @@ the native Python data types that can be easily rendered in JSON,XML or other ty
 from rest_framework import serializers
 from impeachment.models import Impeachment
 
+
 class ImpeachmentSerializers(serializers.ModelSerializer):
     """
     A 'serializer' of 'Impeachment',With Function:
     '* serializer Data: Transform Object to Data.
     '* Deserializer Data: Transform Data to Object.
     """
+
     class Meta:
         model = Impeachment
         fields = "__all__"

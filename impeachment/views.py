@@ -15,11 +15,13 @@ from rest_framework.views import APIView
 from .serializers import ImpeachmentSerializers
 from .models import Impeachment
 
+
 class RequestTestAPI(APIView):
     """View to Check if API is working"""
 
     def get(self, request, format=None):
         return Response({"API": "OK"})
+
 
 class ImpeachmentCreateViewSet(generics.CreateAPIView):
     """Create Product with Method: 'POST'"""
@@ -28,10 +30,12 @@ class ImpeachmentCreateViewSet(generics.CreateAPIView):
     serializer_class = ImpeachmentSerializers
     """Update/Delete/Retrieve Product with one these Method: 'GET' / 'UPDATE' / 'DELETE'"""
 
+
 class ImpeachmentRetrieveUpdateDeleteViewSet(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Impeachment.objects.all()
     serializer_class = ImpeachmentSerializers
+
 
 class ImpeachmentListViewSet(generics.ListAPIView):
     """View to List all Product with Method: 'GET'"""
