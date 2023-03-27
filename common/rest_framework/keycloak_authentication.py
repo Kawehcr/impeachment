@@ -3,10 +3,11 @@ from keycloak import KeycloakOpenID
 from rest_framework import authentication
 from rest_framework.exceptions import NotAuthenticated
 from jose import ExpiredSignatureError, JWTError
+from rest_framework.response import Response
 
 
 class KeycloakAuthentication(authentication.TokenAuthentication):
-    def _init_(self):
+    def __init__(self):
         self._config = getattr(settings, "KEYCLOAK_CONFIG")
         self._admin_role = "admin_integration"
 
