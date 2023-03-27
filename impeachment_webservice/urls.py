@@ -18,31 +18,31 @@ from .docs import schema_view
 
 urlpatterns = [
     path(
-        "api/v1/Impeachments/create",
+        "api/v1/impeachments/create",
         ImpeachmentCreateViewSet.as_view(),
         name="Impeachment_create",
     ),
     path(
-        "api/v1/Impeachments/<int:pk>/retrieve",
+        "api/v1/impeachments/<int:pk>/retrieve",
         ImpeachmentRetrieveUpdateDeleteViewSet.as_view(),
         name="Impeachment_retrieve",
     ),
     path(
-        "api/v1/Impeachments/<int:pk>/update",
+        "api/v1/impeachments/<int:pk>/update",
         ImpeachmentRetrieveUpdateDeleteViewSet.as_view(),
         name="Impeachment_update",
     ),
     path(
-        "api/v1/Impeachments/<int:pk>/destroy",
+        "api/v1/impeachments/<int:pk>/destroy",
         ImpeachmentRetrieveUpdateDeleteViewSet.as_view(),
         name="Impeachment_destroy",
     ),
     path(
-        "api/v1/Impeachments/<int:company_id>/list",
+        "api/v1/impeachments/<int:company_id>/list",
         ImpeachmentListViewSet.as_view(),
         name="Impeachment_list",
     ),
-    path("api/v1/request", RequestTestAPI.as_view(), name="Impeachment_test"),
+    path("api/v1/request/", RequestTestAPI.as_view(), name="Impeachment_test"),
     path(
         "docs/",
         schema_view.with_ui("swagger", cache_timeout=None),
