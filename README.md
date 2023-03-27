@@ -106,7 +106,11 @@ curl --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2
 
 ### Response
 
-<<< Preencher com o JSON de response que será recebido ao chamar o método na api>>>
+"id": 1,
+"company_id": 12,
+"name_impeachment": "teste1",
+"description_impeachment": "testando"
+...
 
 ## Create a new Impeachment
 
@@ -118,7 +122,11 @@ curl --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2
 
 ### Response
 
-<<< Preencher com o JSON de response que será recebido ao chamar o método na api>>>
+"id": 1,
+"company_id": 12,
+"name_impeachment": "teste1",
+"description_impeachment": "testando"
+...
 
 ## Get a specific Impeachment
 
@@ -130,7 +138,11 @@ curl --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2
 
 ### Response
 
-<<< Preencher com o JSON de response que será recebido ao chamar o método na api>>>
+"id": 1,
+"company_id": 12,
+"name_impeachment": "teste1",
+"description_impeachment": "testando"
+...
 
 ## Get a non-existent Impeachment
 
@@ -156,7 +168,11 @@ curl --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2
 
 ### Response
 
-<<< Preencher com o JSON de response que será recebido ao chamar o método na api>>>
+"id": 1,
+"company_id": 12,
+"name_impeachment": "teste2",
+"description_impeachment": "testando"
+...
 
 ## Delete a impeachment
 
