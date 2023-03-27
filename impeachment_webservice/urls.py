@@ -38,7 +38,7 @@ urlpatterns = [
         name="Impeachment_destroy",
     ),
     path(
-        "api/v1/Impeachments/list",
+        "api/v1/Impeachments/<int:company_id>/list",
         ImpeachmentListViewSet.as_view(),
         name="Impeachment_list",
     ),

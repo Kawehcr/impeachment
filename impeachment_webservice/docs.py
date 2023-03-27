@@ -3,7 +3,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 swagger_info = openapi.Info(
-    title="Clients API",
+    title="Impeachment API",
     default_version="v1",
     description="""Platform Campos Developers 365 - Campos Developers API
 

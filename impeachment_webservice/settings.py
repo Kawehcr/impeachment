@@ -97,32 +97,32 @@ SWAGGER_SETTINGS = {
 
 
 # CONFIGURATION DJANGO-REST-FRAMEWORK
-REST_FRAMEWORK = {
-    "UNAUTHENTICATED_USER": None,
-    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "common.rest_framework.keycloak_authentication.KeycloakAuthentication"
-    ],
-    "PAGE_SIZE": 100,
-    "ORDERING_PARAM": "order",
-}
+#REST_FRAMEWORK = {
+#    "UNAUTHENTICATED_USER": None,
+#    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+#    "DEFAULT_AUTHENTICATION_CLASSES": [
+#        "common.rest_framework.keycloak_authentication.KeycloakAuthentication"
+#    ],
+#    "PAGE_SIZE": 100,
+#    "ORDERING_PARAM": "order",
+#}
 
 
 # CONFIGURATION KEYCLOAK
-KEYCLOAK_PUBLIC_KEY = os.environ.get("KEYCLOAK_PUBLIC_KEY")
+KEYCLOAK_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsFHdqPiyJHhE3YM0fD9J25ryICcC4PgraVAF0KtnM4ZUUc6g5gimdqubwJqX7ttmePLXVx1P0yOhYIxUtm2UQ/mTrpBn6GMotrMX12bWiQ7V6oDV/r0HMBEjxohmWR6HtGmq31DhZtMr8BTPBb9REiVKCMnIs1q2QuT/5vk3HRfGxeSkFcaigXjioVXlPnY8zcfS5QtFCJOkvaXDRcwIsoPs4zvQo7EOKizt+zSs59jwANky3I+obECMb0/V7ButqFVkYpD8vMlewYIigjcEA//ABB0pvO5dHcSvL9BmG5rbLcDTzHXerjyd+FKvzAL46GcTDMHeFBb0lx6xznDDowIDAQAB"
 
 KEYCLOAK_FORMAT_PUBLIC_KEY = """-----BEGIN PUBLIC KEY-----
 {}
 -----END PUBLIC KEY-----"""
 
-KEYCLOAK_SERVER_URL = os.environ.get("KEYCLOAK_SERVER_URL")
-KEYCLOAK_REALM = os.environ.get("KEYCLOAK_REALM")
-KEYCLOAK_CLIENT_ID = os.environ.get("KEYCLOAK_CLIENT_ID")
-KEYCLOAK_CLIENT_SECRET_KEY = os.environ.get("KEYCLOAK_CLIENT_SECRET_KEY")
+KEYCLOAK_SERVER_URL = "https://keycloak-dev.camposdevelopers.com.br/auth/"
+KEYCLOAK_REALM = "campos_developers"
+KEYCLOAK_CLIENT_ID = "impeachment"
+KEYCLOAK_CLIENT_SECRET_KEY = "ookUhqBU70vU8XiYy65QS2vlec9IxSAg"
 
-KEYCLOAK_CLIENT_PUBLIC_KEY = os.environ.get(
-    "KEYCLOAK_CLIENT_PUBLIC_KEY", KEYCLOAK_PUBLIC_KEY
-)
+KEYCLOAK_CLIENT_PUBLIC_KEY = {
+    "KEYCLOAK_CLIENT_PUBLIC_KEY": KEYCLOAK_PUBLIC_KEY
+}
 
 KEYCLOAK_CONFIG = {
     "KEYCLOAK_SERVER_URL": KEYCLOAK_SERVER_URL,
@@ -181,6 +181,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

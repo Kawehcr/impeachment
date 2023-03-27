@@ -40,5 +40,18 @@ class ImpeachmentRetrieveUpdateDeleteViewSet(generics.RetrieveUpdateDestroyAPIVi
 class ImpeachmentListViewSet(generics.ListAPIView):
     """View to List all Product with Method: 'GET'"""
 
-    queryset = Impeachment.objects.all()
     serializer_class = ImpeachmentSerializers
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        queryset = Impeachment.objects.filter(company_id=self.kwargs["company_id"])
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
