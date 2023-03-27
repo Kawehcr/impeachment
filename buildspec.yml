@@ -1,0 +1,39 @@
+version: 0.2
+phases: 
+  install:
+    commands: 
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"      
+  pre_build: 
+    commands: 
+    - echo Logging in to Amazon ECR.... 
+    - aws --version
+    - echo Logging in to Amazon ECR...
+    - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $REPOSITORY_URI
+  build: 
+    commands: 
+    - echo Build started on `date` 
+    - CODEARTIFACT_TOKEN=$(aws codeartifact get-authorization-token --domain $ARTIFACT_DOMAIN --domain-owner $ACCOUNT_ID --query authorizationToken --output text)
+    - ENDPOINT_VALUE=$(aws secretsmanager get-secret-value --secret-id $ENDPOINT --output text --query SecretString | cut -d":" -f1)
+    - USER_NAME_VALUE=$(aws secretsmanager get-secret-value --secret-id $USERNAME --output text --query SecretString)
+    - PASSWORD_VALUE=$(aws secretsmanager get-secret-value --secret-id $PASSWORD --output text --query SecretString)
+    
+    - echo Verify Migrations
+    - wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/6.5.3/flyway-commandline-6.5.3-linux-x64.tar.gz | tar xvz && ln -s `pwd`/flyway-6.5.3/flyway /usr/local/bin
+    - cp scripts/*.sql flyway-6.5.3/sql
+    - flyway -url=jdbc:mysql://$ENDPOINT_VALUE:$PORT/$DATABASENAME -user=$USER_NAME_VALUE -password=$PASSWORD_VALUE repair
+    - flyway -url=jdbc:mysql://$ENDPOINT_VALUE:$PORT/$DATABASENAME -user=$USER_NAME_VALUE -password=$PASSWORD_VALUE info
+    - flyway -url=jdbc:mysql://$ENDPOINT_VALUE:$PORT/$DATABASENAME -user=$USER_NAME_VALUE -password=$PASSWORD_VALUE migrate    
+    
+    - echo Building the Docker image...
+    - docker build -t $CONTAINER_NAME:latest --build-arg CODEARTIFACT_TOKEN=$CODEARTIFACT_TOKEN --build-arg CODEARTIFACT_URL=$CODEARTIFACT_URL --build-arg DATABASENAME=$DATABASENAME --build-arg USERNAME=$USER_NAME_VALUE --build-arg PASSWORD=$PASSWORD_VALUE --build-arg ENDPOINT=$ENDPOINT_VALUE --build-arg PORT=$PORT --build-arg KEYCLOAK_PUBLIC_KEY=$KEYCLOAK_PUBLIC_KEY --build-arg KEYCLOAK_SERVER_URL=$KEYCLOAK_SERVER_URL --build-arg KEYCLOAK_REALM=$KEYCLOAK_REALM --build-arg KEYCLOAK_CLIENT_ID=$KEYCLOAK_CLIENT_ID --build-arg KEYCLOAK_CLIENT_SECRET_KEY=$KEYCLOAK_CLIENT_SECRET_KEY --build-arg APP_URL_AUTHENTICATION=$APP_URL_AUTHENTICATION .
+    - docker tag $CONTAINER_NAME:latest $REPOSITORY_URI:latest
+  post_build: 
+    commands: 
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $REPOSITORY_URI:latest
+      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI:latest > imagedefinitions.json
+artifacts:
+  files:
+    - imagedefinitions.json
