@@ -63,9 +63,9 @@ CORS_ALLOWED_ORIGINS = [
 
     "http://localhost:3000",
 
-    "http://brand-dev.camposdevelopers.com.br",
+    "http://impeachment-dev.camposdevelopers.com.br",
 
-    "https://brand-dev.camposdevelopers.com.br",
+    "https://impeachment-dev.camposdevelopers.com.br",
 
     "https://frontend-dev.camposdevelopers.com.br",
 
